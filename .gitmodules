@@ -1,0 +1,3 @@
+[submodule "CICD"]
+	path = CICD
+	url = https://github.com/mblal/CICD.git
