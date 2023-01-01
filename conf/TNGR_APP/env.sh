@@ -6,5 +6,5 @@ export GIT_SOURCE_BRANCH=develop
 
 # Docker repository part, In my case, it's a local docker repository, but it can be any repository manger (nexus...)
 
-export DOCKER_REPO_URL=localhost:5000/
+export DOCKER_REPO_URL=localhost:5000
 export DOCKER_REPO_USER="Test"
