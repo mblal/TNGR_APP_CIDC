@@ -30,3 +30,4 @@ echo "---> Building application from source..."
 cd /tmp/src/back
 npm i -g gulp
 npm install
+gulp build
