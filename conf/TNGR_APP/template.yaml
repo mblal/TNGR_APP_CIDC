@@ -25,7 +25,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: my-app
+        app: ${NORMALIZED_APP_NAME}
     spec:
       containers:
       - image: ${DOCKER_REPO_URL}/${DOCKER_IMAGE_NORMALIZED_NAME}
