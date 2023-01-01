@@ -13,13 +13,13 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: ${APP_NAME}
-  name: ${APP_NAME}
+    app: ${NORMALIZED_APP_NAME}
+  name: ${NORMALIZED_APP_NAME}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ${APP_NAME}
+      app: ${NORMALIZED_APP_NAME}
   strategy: {}
   template:
     metadata:
