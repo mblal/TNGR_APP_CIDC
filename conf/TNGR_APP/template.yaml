@@ -37,3 +37,21 @@ spec:
       imagePullSecrets:
       - name: myregistrykey
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ${NORMALIZED_APP_NAME}
+  name: ${NORMALIZED_APP_NAME}
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: ${NORMALIZED_APP_NAME}
+  type: NodePort
+status:
+  loadBalancer: {}
