@@ -27,7 +27,7 @@ cp -Rf /tmp/src/. ./
 cp -Rf /tmp/src /opt/
 echo "---> Building application from source..."
 # TODO: Add build steps for your application, eg npm install, bundle install, pip install, etc.
-cd /tmp/src/back
+cd /opt/src/back
 npm i -g gulp
 npm install
 gulp build
