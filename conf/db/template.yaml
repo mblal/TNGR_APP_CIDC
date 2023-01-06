@@ -1,0 +1,105 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql5732-secrets
+type: Opaque
+data:
+  ROOT_PASSWORD: YmxhbA==
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zero-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: first-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: second-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-mysql-5732
+  labels:
+    aim: support
+    env: build
+    service: mysql
+spec:
+  selector:
+    matchLabels:
+      service: mysql57server
+  template:
+    metadata:
+      labels:
+        service: mysql57server
+    spec:
+      volumes:
+        - name: mysql-conf-first-db-volume
+          persistentVolumeClaim:
+            claimName: zero-claim
+        - name: mysql-log-second-db-volume
+          persistentVolumeClaim:
+            claimName: first-claim
+        - name: mysql-data-third-db-volume
+          persistentVolumeClaim:
+            claimName: second-claim
+      containers:
+        - name: db1-mysql5732
+          image: library/mysql:5.7.32
+          volumeMounts:
+            - mountPath: /etc/mysql
+              name: mysql-conf-first-db-volume
+              subPath: mysql
+            - mountPath: /var/log/mysql
+              name: mysql-log-second-db-volume
+              subPath: mysql
+            - mountPath: /var/lib/mysql
+              name: mysql-data-third-db-volume
+              subPath: mysql
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql5732-secrets
+                  key: ROOT_PASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-mysql5732
+spec:
+  type: NodePort
+  selector:
+    service: mysql57server
+  ports:
+    - port: 3306
+      protocol: TCP
+      nodePort: 3306
