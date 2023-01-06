@@ -5,7 +5,7 @@ metadata:
   name: mysql5732-secrets
 type: Opaque
 data:
-  ROOT_PASSWORD: YmxhbA==
+  ROOT_PASSWORD: Y2xpbmlxdWU=
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
