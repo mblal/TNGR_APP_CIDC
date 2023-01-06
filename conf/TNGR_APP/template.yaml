@@ -55,3 +55,25 @@ spec:
   type: NodePort
 status:
   loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${NORMALIZED_APP_NAME}-ingress
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - medical.ledger.ma
+    secretName: tngr-app-secret # this secret name is already created by the admin on the k8s cluster
+  rules:
+  - host: "medical.ledger.ma"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: ${NORMALIZED_APP_NAME}
+              port:
+                number: 80
