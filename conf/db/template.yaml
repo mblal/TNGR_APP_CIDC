@@ -8,6 +8,49 @@ data:
   ROOT_PASSWORD: Y2xpbmlxdWU=
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-conf-first-db-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/shared/etc
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-log-second-db-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/shared/var/log
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-data-third-db-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/shared/var/lib
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: zero-claim
