@@ -132,6 +132,11 @@ spec:
                 secretKeyRef:
                   name: tngr-db-secret
                   key: ROOT_PASSWORD
+            - name: ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tngr-db-secret
+                  key: ROOT_PASSWORD
 
 ---
 apiVersion: v1
