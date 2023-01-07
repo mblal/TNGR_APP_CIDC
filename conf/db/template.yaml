@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysql5732-secrets
+  name: tngr-db-secret
 type: Opaque
 data:
   ROOT_PASSWORD: Y2xpbmlxdWU=
@@ -43,19 +43,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-mysql-5732
+  name: tngr-db-mysql8
   labels:
     aim: support
     env: build
-    service: mysql
+    service: tngr-mysql-database
 spec:
   selector:
     matchLabels:
-      service: mysql57server
+      service: tngr-mysql-database
   template:
     metadata:
       labels:
-        service: mysql57server
+        service: tngr-mysql-database
     spec:
       volumes:
         - name: mysql-conf-first-db-volume
@@ -68,8 +68,8 @@ spec:
           persistentVolumeClaim:
             claimName: second-claim
       containers:
-        - name: db1-mysql5732
-          image: library/mysql:5.7.32
+        - name: tngr-db
+          image: mysql:8.0.27
           volumeMounts:
             - mountPath: /etc/mysql
               name: mysql-conf-first-db-volume
@@ -87,18 +87,18 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql5732-secrets
+                  name: tngr-db-secret
                   key: ROOT_PASSWORD
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-mysql5732
+  name: tngr-database-svc
 spec:
   type: NodePort
   selector:
-    service: mysql57server
+    service: tngr-mysql-database
   ports:
     - port: 3306
       protocol: TCP
