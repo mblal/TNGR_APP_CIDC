@@ -7,88 +7,6 @@ type: Opaque
 data:
   ROOT_PASSWORD: Y2xpbmlxdWU=
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-conf-first-db-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /etc/mysql
-
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-log-second-db-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /var/log/mysql
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-data-third-db-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /var/lib/mysql
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: first-claim
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: second-claim
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: third-claim
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -110,33 +28,22 @@ spec:
         - name: tngr-db
           image: mysql:8.0.27
           volumeMounts:
-            - mountPath: /etc/mysql
-              name: mysql-conf-first-db-volume
-              subPath: mysql
             - mountPath: /var/log/mysql
               name: mysql-log-second-db-volume
-              subPath: mysql
             - mountPath: /var/lib/mysql
               name: mysql-data-third-db-volume
-              subPath: mysql
           ports:
             - containerPort: 3306
               protocol: TCP
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: tngr-db-secret
-                  key: ROOT_PASSWORD
+              value: clinique
             - name: ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: tngr-db-secret
                   key: ROOT_PASSWORD
       volumes:
-        - name: mysql-conf-first-db-volume
-          persistentVolumeClaim:
-            claimName: first-claim
         - name: mysql-log-second-db-volume
           persistentVolumeClaim:
             claimName: second-claim
