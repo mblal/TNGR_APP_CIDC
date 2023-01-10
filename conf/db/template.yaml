@@ -106,16 +106,6 @@ spec:
       labels:
         service: tngr-mysql-database
     spec:
-      volumes:
-        - name: mysql-conf-first-db-volume
-          persistentVolumeClaim:
-            claimName: first-claim
-        - name: mysql-log-second-db-volume
-          persistentVolumeClaim:
-            claimName: second-claim
-        - name: mysql-data-third-db-volume
-          persistentVolumeClaim:
-            claimName: third-claim
       containers:
         - name: tngr-db
           image: mysql:8.0.27
@@ -143,7 +133,16 @@ spec:
                 secretKeyRef:
                   name: tngr-db-secret
                   key: ROOT_PASSWORD
-
+      volumes:
+        - name: mysql-conf-first-db-volume
+          persistentVolumeClaim:
+            claimName: first-claim
+        - name: mysql-log-second-db-volume
+          persistentVolumeClaim:
+            claimName: second-claim
+        - name: mysql-data-third-db-volume
+          persistentVolumeClaim:
+            claimName: third-claim
 ---
 apiVersion: v1
 kind: Service
