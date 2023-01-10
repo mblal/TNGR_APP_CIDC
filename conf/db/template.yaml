@@ -30,6 +30,7 @@ metadata:
   labels:
     type: local
 spec:
+  storageClassName: manual
   capacity:
     storage: 1Gi
   accessModes:
@@ -44,6 +45,7 @@ metadata:
   labels:
     type: local
 spec:
+  storageClassName: manual
   capacity:
     storage: 5Gi
   accessModes:
