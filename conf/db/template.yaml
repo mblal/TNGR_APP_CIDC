@@ -19,7 +19,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/shared/etc
+    path: /etc/mysql
 
 ---
 apiVersion: v1
@@ -34,7 +34,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/shared/var/log
+    path: /var/log/mysql
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -48,18 +48,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/shared/var/lib
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: zero-claim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+    path: /var/lib/mysql
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -76,6 +65,17 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: second-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: third-claim
 spec:
   accessModes:
     - ReadWriteOnce
@@ -103,13 +103,13 @@ spec:
       volumes:
         - name: mysql-conf-first-db-volume
           persistentVolumeClaim:
-            claimName: zero-claim
+            claimName: first-claim
         - name: mysql-log-second-db-volume
           persistentVolumeClaim:
-            claimName: first-claim
+            claimName: second-claim
         - name: mysql-data-third-db-volume
           persistentVolumeClaim:
-            claimName: second-claim
+            claimName: third-claim
       containers:
         - name: tngr-db
           image: mysql:8.0.27
