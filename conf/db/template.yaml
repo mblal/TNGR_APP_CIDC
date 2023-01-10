@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: tngr-db
-          image: mysql:8.0.27
+          image: mysql:8.0
           volumeMounts:
             - mountPath: /var/log/mysql
               name: mysql-log-second-db-volume
