@@ -8,6 +8,15 @@ metadata:
   name: myregistrykey
 type: kubernetes.io/dockerconfigjson
 ---
+apiVersion: v1
+data:
+  password: Y2xpbmljX3B3ZA==
+  username: Y2xpbmljX3VzZXI=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: tngr-app-db-credentials
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,6 +43,18 @@ spec:
         env:
         - name: NODE_ENV
           value: ${TARGET_ENV}
+        - name: DB_LOGIN
+          valueFrom:
+            secretKeyRef:
+              name: ${NORMALIZED_APP_NAME}-db-credentials
+              key: username
+              optional: false
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ${NORMALIZED_APP_NAME}-db-credentials
+              key: password
+              optional: false
       imagePullSecrets:
       - name: myregistrykey
 status: {}
