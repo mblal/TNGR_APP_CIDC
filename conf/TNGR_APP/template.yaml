@@ -15,7 +15,7 @@ data:
 kind: Secret
 metadata:
   creationTimestamp: null
-  name: ${NORMALIZED_APP_NAME}-credentials
+  name: ${NORMALIZED_APP_NAME}-db-credentials
 ---
 apiVersion: apps/v1
 kind: Deployment
