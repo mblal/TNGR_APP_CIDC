@@ -15,7 +15,7 @@ data:
 kind: Secret
 metadata:
   creationTimestamp: null
-  name: tngr-app-db-credentials
+  name: ${NORMALIZED_APP_NAME}-credentials
 ---
 apiVersion: apps/v1
 kind: Deployment
