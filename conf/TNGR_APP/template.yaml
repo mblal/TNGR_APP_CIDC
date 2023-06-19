@@ -1,5 +1,16 @@
 ---
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ${NORMALIZED_APP_NAME}-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
 data:
   .dockerconfigjson: eyJhdXRocyI6eyJsb2NhbGhvc3Q6NTAwMCI6eyJ1c2VybmFtZSI6Im1ibGNvbnRhaW5lcml6ZSIsInBhc3N3b3JkIjoiMTIzIiwiZW1haWwiOiJtb2hhbW1lZC5ibGFsQGdtYWlsLmNvbSIsImF1dGgiOiJiV0pzWTI5dWRHRnBibVZ5YVhwbE9qRXlNdz09In19fQ==
 kind: Secret
