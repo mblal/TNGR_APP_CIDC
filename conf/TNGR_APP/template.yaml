@@ -51,7 +51,7 @@ spec:
       - image: ${DOCKER_REPO_URL}/${DOCKER_IMAGE_NORMALIZED_NAME}
         name: ${DOCKER_IMAGE_NORMALIZED_NAME}
         volumeMounts:
-        - name: ${NORMALIZED_APP_NAME}-vol
+        - name: ${NORMALIZED_APP_NAME}-pv
           mountPath: /opt/uploads
         resources: {}
         env:
@@ -69,6 +69,10 @@ spec:
               name: ${NORMALIZED_APP_NAME}-db-credentials
               key: password
               optional: false
+      volumes:
+      - name: ${NORMALIZED_APP_NAME}-pv
+        persistentVolumeClaim:
+          claimName: ${NORMALIZED_APP_NAME}-pvc
       imagePullSecrets:
       - name: myregistrykey
 status: {}
