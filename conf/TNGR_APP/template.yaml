@@ -17,32 +17,32 @@ metadata:
   creationTimestamp: null
   name: ${NORMALIZED_APP_NAME}-db-credentials
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: ${NORMALIZED_APP_NAME}-pv
-  labels:
-    id: ${NORMALIZED_APP_NAME}-pv
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  hostPath:
-    path: /clinic
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ${NORMALIZED_APP_NAME}-pvc
-spec:
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 500Mi
----
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: ${NORMALIZED_APP_NAME}-pv
+#  labels:
+#    id: ${NORMALIZED_APP_NAME}-pv
+#spec:
+#  capacity:
+#    storage: 10Gi
+#  accessModes:
+#    - ReadWriteMany
+#  persistentVolumeReclaimPolicy: Retain
+#  hostPath:
+#    path: /clinic
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: ${NORMALIZED_APP_NAME}-pvc
+#spec:
+#  accessModes:
+#  - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: 500Mi
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
